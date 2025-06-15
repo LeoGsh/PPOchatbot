@@ -193,9 +193,12 @@ class VKBot:
 
     def run(self):
         print("Бот читает")
-        try:
-            for event in self.longpoll.listen():
-                if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                    self.process_message(event)
-        except Exception as e:
-            print(f"[ERROR] Ошибка в run: {e}")
+        while True:
+            try:
+                self.longpoll = VkLongPoll(self.vk_session)
+                for event in self.longpoll.listen():
+                    if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+                        self.process_message(event)
+            except Exception as e:
+                print(f"[ERROR] Ошибка в run: {e}")
+                time.sleep(5)
