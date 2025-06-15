@@ -163,7 +163,10 @@ def _handle_filling_spp(self, user_id, text):
             return
 
         step_info = FILLING_STEPS[progress]
-        self.send_message(user_id, step_info['prompt'])
+        self.send_message(
+            user_id,
+            step_info['prompt'],
+            keyboard=Keyboards.create_standart_menu())
 
         user_data["fill_progress"] = progress + 1
 
